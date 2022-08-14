@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Etch-a-Sketch</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+        <script src="./script.js" defer></script>
+    </head>
+    <body>
+        <h1>Etch a Sketch</h1>
+        <div id="control-container">
+            <p> Move the slider to select a grid size, then click "New Grid" to create a new canvas. You can clear the canvas by clicking "Clear"</p>
+            <!-- makes the slider and grid size text on 1 line -->
+            <div>
+                <input type="range" id="size-range" name="size"
+                min="1" max="100" default="16">
+                <label id="size-label" for="size">Grid size: 16</label>
+            </div>
+            <button class="new" type="button">New Grid</button>
+            <button class="clear" type="button">Clear</button>
+
+        </div>
+        <div id="grid-container"> </div>     
+    </body>
+</html>
