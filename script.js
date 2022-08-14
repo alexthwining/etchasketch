@@ -6,6 +6,10 @@ const sizeRange = document.querySelector("#size-range");
 const sizeLabel = document.querySelector("#size-label");
 const newGridBtn = document.querySelector(".new");
 const clearBtn = document.querySelector(".clear");
+const defaultBtn = document.querySelector(".default");
+const eraserBtn = document.querySelector(".eraser");
+const rainbowBtn = document.querySelector(".rainbow");
+const picker = document.querySelector(".picker");
 let userGridSize = 0;
 
 let cells = [];
@@ -16,8 +20,21 @@ function createGrid(gridSize) {
     for(let i = 0; i < totalCells; i++) {
         cells[i] = document.createElement("div");
         cells[i].classList.add("cell");
-        cells[i].style = 'background-color: rgba(255, 255, 255, 1)';
+        cells[i].style = "background-color: rgb(255, 255, 255)";
         gridContainer.appendChild(cells[i]);
+    }
+
+    // hover effect for each cell
+    cells.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            item.style.backgroundColor = "rgb(0, 0, 0)";
+        });
+    });
+}
+
+function clearGrid() {
+    while(gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.firstChild);
     }
 }
 
@@ -30,26 +47,67 @@ function addListeners() {
 
     newGridBtn.addEventListener("click", () => {
         console.log("userGridSize: " + userGridSize);
+        clearGrid();
+        if(userGridSize < 1) {
+            createGrid(DEFAULT_GRID);
+        }
+        createGrid(userGridSize);
     });
 
     clearBtn.addEventListener("click", () => {
-        console.log("will clear");
+        clearGrid();
+        if(userGridSize < 1) {
+            createGrid(DEFAULT_GRID);
+        }
+        createGrid(userGridSize);
     });
 
-    // hover effect for each cell
-    cells.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            item.style.backgroundColor = "rgba(199, 100, 100, 1)";
+    defaultBtn.addEventListener("click", () => {
+        // hover effect for each cell
+        cells.forEach(item => {
+            item.addEventListener("mouseenter", () => {
+                item.style.backgroundColor = "rgb(0, 0, 0)";
+            });
         });
     });
 
+    eraserBtn.addEventListener("click", () => {
+        // hover effect for each cell
+        cells.forEach(item => {
+            item.addEventListener("mouseenter", () => {
+                item.style.backgroundColor = "rgb(255, 255, 255)";
+            });
+        });
+    });
+
+    rainbowBtn.addEventListener("click", () => {
+        // rainbow hover effect for each cell
+        cells.forEach(item => {
+            item.addEventListener("mouseenter", () => {
+                item.style.backgroundColor = `rgb(${colorRand()})`;
+            });
+        });
+    });
+
+    picker.addEventListener("input", () => {
+        // chosen color hover effect for each cell
+        cells.forEach(item => {
+            item.addEventListener("mouseenter", () => {
+                item.style.backgroundColor = picker.value;
+            });
+        });
+    });
 
 }
 
+// gets randomized color
+function colorRand() {
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
 
-
+    return [r,g,b];
+}
 
 createGrid(DEFAULT_GRID);
 addListeners();
-
-console.log(userGridSize);
